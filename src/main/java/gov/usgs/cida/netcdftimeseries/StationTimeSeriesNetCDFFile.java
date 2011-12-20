@@ -37,7 +37,7 @@ public class StationTimeSeriesNetCDFFile implements Closeable {
     private int record_index;
     private boolean isClosed = false;
 
-    StationTimeSeriesNetCDFFile(File file, RecordType rt, boolean doChunking, Station ... stations) {
+    public StationTimeSeriesNetCDFFile(File file, RecordType rt, boolean doChunking, Station ... stations) {
         this.record = rt;
         this.record_index = 0;
         this.name = file.getName();
