@@ -1,6 +1,6 @@
 package gov.usgs.cida.netcdftimeseries;
 
-import edu.unidata.ucar.netcdf.jna.NCUtil.XType;
+import gov.usgs.cida.netcdf.jna.NCUtil.XType;
 import java.util.HashMap;
 import java.util.Map;
 

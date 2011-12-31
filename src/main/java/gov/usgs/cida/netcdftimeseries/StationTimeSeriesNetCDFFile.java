@@ -6,8 +6,8 @@ import com.sun.jna.NativeLong;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.NativeLongByReference;
 import java.io.File;
-import static edu.unidata.ucar.netcdf.jna.NC.*;
-import static edu.unidata.ucar.netcdf.jna.NCUtil.*;
+import static gov.usgs.cida.netcdf.jna.NC.*;
+import static gov.usgs.cida.netcdf.jna.NCUtil.*;
 import java.nio.ByteOrder;
 import java.util.Map;
 

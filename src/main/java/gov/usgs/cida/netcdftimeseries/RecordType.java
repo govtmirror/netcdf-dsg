@@ -7,8 +7,8 @@ import com.sun.jna.NativeLong;
 import com.sun.jna.ptr.IntByReference;
 import java.util.LinkedList;
 import java.util.List;
-import static edu.unidata.ucar.netcdf.jna.NC.*;
-import static edu.unidata.ucar.netcdf.jna.NCUtil.*;
+import static gov.usgs.cida.netcdf.jna.NC.*;
+import static gov.usgs.cida.netcdf.jna.NCUtil.*;
 
 /**
  *
