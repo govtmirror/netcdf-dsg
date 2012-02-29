@@ -8,8 +8,7 @@
     <name>netcdf-dsg</name>
     
     <scm>
-        <connection>scm:svn:${cida.svn.url}/usgs/gdp/trunk</connection>
-        <developerConnection>scm:svn:${cida.svn.url}/usgs/gdp/trunk</developerConnection>
+        <developerConnection>scm:svn:${cida.svn.url}/usgs/netcdf/netcdf-timeseries/trunk</developerConnection>
     </scm>
     
     <build>
