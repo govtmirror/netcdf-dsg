@@ -6,6 +6,12 @@
     <artifactId>netcdf-dsg</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>netcdf-dsg</name>
+    
+    <scm>
+        <connection>scm:svn:${cida.svn.url}/usgs/gdp/trunk</connection>
+        <developerConnection>scm:svn:${cida.svn.url}/usgs/gdp/trunk</developerConnection>
+    </scm>
+    
     <build>
         <plugins>
             <plugin>
@@ -28,6 +34,8 @@
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <cida.maven.url>http://internal.cida.usgs.gov/maven</cida.maven.url>
+        <cida.svn.url>https://cida-svn.er.usgs.gov/repos/dev</cida.svn.url>
     </properties>
     <dependencies>
         <dependency>
