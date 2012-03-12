@@ -28,8 +28,8 @@ public class RecordType {
         compound_size = 0;
 
         // These have to be the first two in the record type, everything else is statistics
-        addType(Variable.createTimeVariable(timeUnits));
         addType(Variable.createStationIdVariable());
+        addType(Variable.createTimeVariable(timeUnits));
         addType(Variable.createLatitude());
         addType(Variable.createLongitude());
     }

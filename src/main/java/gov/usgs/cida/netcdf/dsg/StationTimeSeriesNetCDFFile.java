@@ -94,8 +94,8 @@ public class StationTimeSeriesNetCDFFile implements Closeable {
             ByteBuffer recordBuffer = ByteBuffer.allocateDirect(record.getCompoundSize());
             recordBuffer.order(ByteOrder.nativeOrder());
             
-            recordBuffer.putInt(observation.time_offset);
             recordBuffer.putInt(observation.station_index);
+            recordBuffer.putInt(observation.time_offset);
             for (Object value : observation.values) {
                 if (value instanceof String) {
                     throw new UnsupportedOperationException(
