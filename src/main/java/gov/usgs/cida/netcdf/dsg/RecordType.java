@@ -12,6 +12,7 @@ import java.util.*;
  * @author Jordan Walker <jiwalker@usgs.gov>
  */
 public class RecordType {
+    public static final String CF_VER = "CF-1.6";
 
     // Complicated structure, attribute name -> 2 lists (variables{string}, values{Object})
     private LinkedHashMap<String, List[]> attributeMap = new LinkedHashMap<String, List[]>();
@@ -221,9 +222,9 @@ public class RecordType {
         }
     }
     
-    public void writeGlobalAttributes(int ncId, LinkedHashMap<String, String> attrMap) {
+    public void writeGlobalAttributes(int ncId, Map<String, String> attrMap) {
         int ncStatus;
-        ncStatus = nc_put_att_text(ncId, NC_GLOBAL, "Conventions", "CF-1.6"); status(ncStatus);
+        ncStatus = nc_put_att_text(ncId, NC_GLOBAL, "Conventions", CF_VER); status(ncStatus);
         ncStatus = nc_put_att_text(ncId, NC_GLOBAL, "CF:featureType", "timeSeries"); status(ncStatus);
         if (null != attrMap) {
             for(String key : attrMap.keySet()) {

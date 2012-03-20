@@ -37,7 +37,19 @@ public class StationTimeSeriesNetCDFFile implements Closeable {
     private int record_index;
     private boolean isClosed = false;
 
+    /**
+     * Put this in place to keep the interface the same for anything using this currently
+     * @param file Output NetCDF file
+     * @param rt RecordType matching the 
+     * @param doChunking
+     * @param stations 
+     */
     public StationTimeSeriesNetCDFFile(File file, RecordType rt, boolean doChunking, Station ... stations) {
+        this(file, rt, null, doChunking, stations);
+    }
+    
+    public StationTimeSeriesNetCDFFile(File file, RecordType rt, Map<String,String> globalAttrs,
+            boolean doChunking, Station ... stations) {
         this.record = rt;
         this.record_index = 0;
         this.name = file.getName();
@@ -68,7 +80,7 @@ public class StationTimeSeriesNetCDFFile implements Closeable {
         int ncTypeId_record_type = this.record.writeRecordCompound(ncId);
         Map<String, Variable> stVars = this.record.writeStationVariables(ncId, ncDimId_station, ncDimId_station_id_len);
         this.record.writeObservationVariables(ncId, ncDimId_observation, ncTypeId_record_type, doChunking);
-        this.record.writeGlobalAttributes(ncId, null); // expose to allow additional global attributes
+        this.record.writeGlobalAttributes(ncId, globalAttrs); // expose to allow additional global attributes
         
         ncStatus = nc_enddef(ncId); status(ncStatus);
         
