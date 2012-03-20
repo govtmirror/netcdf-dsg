@@ -17,5 +17,5 @@ public class Observation {
         this.time_offset = time;
         this.station_index = index;
         this.values = values;
-    } 
+    }
 }

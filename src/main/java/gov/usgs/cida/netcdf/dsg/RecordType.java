@@ -1,21 +1,17 @@
 package gov.usgs.cida.netcdf.dsg;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.LinkedHashMap;
 import com.sun.jna.NativeLong;
 import com.sun.jna.ptr.IntByReference;
-import java.util.LinkedList;
-import java.util.List;
 import static gov.usgs.cida.netcdf.jna.NC.*;
+import gov.usgs.cida.netcdf.jna.NCUtil.XType;
 import static gov.usgs.cida.netcdf.jna.NCUtil.*;
+import java.util.*;
 
 /**
  *
  * @author Jordan Walker <jiwalker@usgs.gov>
  */
 public class RecordType {
-    private static final int NON_STATISTIC_VARIABLE_COUNT = 4;
 
     // Complicated structure, attribute name -> 2 lists (variables{string}, values{Object})
     private LinkedHashMap<String, List[]> attributeMap = new LinkedHashMap<String, List[]>();
@@ -157,7 +153,8 @@ public class RecordType {
 
         // Can I pull this out in a generalized way
         ncStatus = nc_put_att_text(ncId, record_var_id, "coordinates",
-                                   structName + ".time lon lat");
+                                   structName + ".time lon lat"); 
+        status(ncStatus);
 
         for (String attr : attributeMap.keySet()) {
             String compoundName = structName + "_" + attr + "_type";

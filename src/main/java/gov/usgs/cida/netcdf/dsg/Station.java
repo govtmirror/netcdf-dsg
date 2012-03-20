@@ -8,11 +8,19 @@ public class Station {
     public final float latitude;
     public final float longitude;
     public final String station_id;
+    // for convenience, used to save from doing multiple lookups
+    // can be changed or ignored based on the scheme for writing to file
+    public int index;
     
     public Station(float lat, float lon, String station_id) {
+        this(lat, lon, station_id, -1);
+    }
+    
+    public Station(float lat, float lon, String station_id, int index) {
         this.latitude = lat;
         this.longitude = lon;
         this.station_id = station_id;
+        this.index = index;
     }
     
     /*
@@ -28,4 +36,5 @@ public class Station {
         }
         return max;
     }
+    
 }
