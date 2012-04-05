@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>gov.usgs.cida.netcdf</groupId>
     <artifactId>netcdf-dsg</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>netcdf-dsg</name>
     
     <scm>
-        <developerConnection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/usgs/netcdf/netcdf-timeseries/trunk</developerConnection>
+        <developerConnection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/usgs/netcdf/netcdf-timeseries/tags/netcdf-dsg-1.1</developerConnection>
     </scm>
     <distributionManagement>
         <repository>
