@@ -241,6 +241,16 @@ public class RecordType {
         return record_var_id;
     }
     
+    public List<String> getDataVarNames() {
+        List<String> varNames = new LinkedList<String>();
+        for (Variable var : typeList) {
+            if (var.vtype == Variable.VariableType.STATISTIC) {
+                varNames.add(var.name);
+            }
+        }
+        return varNames;
+    }
+    
     public boolean isObservationValid(Observation observation) {
         int statisticCount = 0;
         for (Variable type : typeList) {
