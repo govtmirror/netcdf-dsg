@@ -3,7 +3,6 @@ package gov.usgs.cida.netcdf.dsg;
 import com.sun.jna.NativeLong;
 import com.sun.jna.ptr.IntByReference;
 import static gov.usgs.cida.netcdf.jna.NC.*;
-import gov.usgs.cida.netcdf.jna.NCUtil.XType;
 import static gov.usgs.cida.netcdf.jna.NCUtil.*;
 import java.util.*;
 
@@ -138,11 +137,11 @@ public class RecordType {
         return returnMap;
     }
 
-    public void writeObservationVariables(int ncId, int ncDimId_observation,
+    public void writeObservationVariables(int ncId, int[] ncDimId,
                                              int ncTypeId_record_type, boolean doChunking) {
         int ncStatus;
         IntByReference iRef = new IntByReference();
-        int[] record_dimidsp = new int[] { ncDimId_observation };
+        int[] record_dimidsp = ncDimId;
         String structName = StationTimeSeriesNetCDFFile.OBSERVATION_STRUCT_NAME;
 
         ncStatus = nc_def_var(ncId, structName, ncTypeId_record_type,
