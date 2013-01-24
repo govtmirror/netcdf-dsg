@@ -1,43 +1,36 @@
 package gov.usgs.cida.netcdf.dsg;
 
-import gov.usgs.cida.netcdf.dsg.Station;
-import gov.usgs.cida.netcdf.dsg.Observation;
-import gov.usgs.cida.netcdf.dsg.Variable;
-import gov.usgs.cida.netcdf.dsg.RecordType;
-import gov.usgs.cida.netcdf.dsg.StationTimeSeriesNetCDFFile;
 import gov.usgs.cida.netcdf.jna.NCUtil.XType;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import junit.framework.TestCase;
+import org.junit.After;
+import static org.junit.Assert.assertTrue;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Jordan Walker <jiwalker@usgs.gov>
  */
-public class StationTimeSeriesNetCDFFileTest extends TestCase {
+public class StationTimeSeriesNetCDFFileTest {
     
     private File testfile;
     
-    public StationTimeSeriesNetCDFFileTest(String testName) {
-        super(testName);
-    }
-    
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         testfile = new File("/tmp/test.nc");
     }
     
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         testfile.delete();
     }
 
     /**
      * Test of putObservation method, of class StationTimeSeriesNetCDFFile.
      */
+    @Test
     public void testNoObservations() {
         
         File file = testfile;
@@ -61,6 +54,7 @@ public class StationTimeSeriesNetCDFFileTest extends TestCase {
     /**
      * Test of putObservation method, of class StationTimeSeriesNetCDFFile.
      */
+    @Test
     public void testNoObservationsAgain() {
         
         File file = testfile;
@@ -88,36 +82,8 @@ public class StationTimeSeriesNetCDFFileTest extends TestCase {
         assertTrue(file.exists());
     }
     
+    @Test
     public void testTomsCDL() {
-        File file = testfile;
-        //List<Station> stationList = new LinkedList<Station>();
-        Station station1 = new Station(41f, -109f, "demoHUCs.1");
-        Station station2 = new Station(40f, -107f, "demoHUCs.2");
-        RecordType rt = new RecordType("days since 2000-01-01 00:00:00");
-        Map<String, Object> attrMap = new LinkedHashMap<String, Object>();
-        attrMap.put("units", "degC");
-        rt.addType(new Variable("min", XType.NC_FLOAT, attrMap));
-        rt.addType(new Variable("max", XType.NC_FLOAT, attrMap));
-        rt.addType(new Variable("mean", XType.NC_FLOAT, attrMap));
-        
-        StationTimeSeriesNetCDFFile instance = new StationTimeSeriesNetCDFFile(
-                file, rt, true, station1, station2);
-        for (int time=0; time<=9; time++) {
-            for (int index=0; index<=1; index++) {
-                int val = time + (index*10);
-                Float min = new Float(val);
-                Float max = new Float(val+10);
-                Float mean = new Float(val+5);
-                
-                assertTrue(instance.putObservation(new Observation(time, index, min, max, mean)));
-            }
-        }
-        
-        instance.close();
-        assertTrue(file.exists());
-    }
-    
-    public void testOrthogonalMultiDimension() {
         File file = testfile;
         //List<Station> stationList = new LinkedList<Station>();
         Station station1 = new Station(41f, -109f, "demoHUCs.1");
