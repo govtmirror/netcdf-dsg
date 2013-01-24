@@ -9,13 +9,15 @@ import java.util.Map;
  * @author Jordan Walker <jiwalker@usgs.gov>
  */
 public class Variable {
+    
     public final String name;
     public final VariableType vtype;
     public final XType xtype;
     public final Map<String, Object> attributes;
+    
     public int ncVarId;
             
-    enum VariableType {
+    public enum VariableType {
         TIME,
         STATION_ID,
         LAT_LON,

@@ -116,4 +116,33 @@ public class StationTimeSeriesNetCDFFileTest extends TestCase {
         instance.close();
         assertTrue(file.exists());
     }
+    
+    public void testOrthogonalMultiDimension() {
+        File file = testfile;
+        //List<Station> stationList = new LinkedList<Station>();
+        Station station1 = new Station(41f, -109f, "demoHUCs.1");
+        Station station2 = new Station(40f, -107f, "demoHUCs.2");
+        RecordType rt = new RecordType("days since 2000-01-01 00:00:00");
+        Map<String, Object> attrMap = new LinkedHashMap<String, Object>();
+        attrMap.put("units", "degC");
+        rt.addType(new Variable("min", XType.NC_FLOAT, attrMap));
+        rt.addType(new Variable("max", XType.NC_FLOAT, attrMap));
+        rt.addType(new Variable("mean", XType.NC_FLOAT, attrMap));
+        
+        StationTimeSeriesNetCDFFile instance = new StationTimeSeriesNetCDFFile(
+                file, rt, true, station1, station2);
+        for (int time=0; time<=9; time++) {
+            for (int index=0; index<=1; index++) {
+                int val = time + (index*10);
+                Float min = new Float(val);
+                Float max = new Float(val+10);
+                Float mean = new Float(val+5);
+                
+                assertTrue(instance.putObservation(new Observation(time, index, min, max, mean)));
+            }
+        }
+        
+        instance.close();
+        assertTrue(file.exists());
+    }
 }

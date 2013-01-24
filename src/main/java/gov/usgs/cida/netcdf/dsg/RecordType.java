@@ -12,6 +12,7 @@ import java.util.*;
  * @author Jordan Walker <jiwalker@usgs.gov>
  */
 public class RecordType {
+    
     public static final String CF_VER = "CF-1.6";
 
     // Complicated structure, attribute name -> 2 lists (variables{string}, values{Object})

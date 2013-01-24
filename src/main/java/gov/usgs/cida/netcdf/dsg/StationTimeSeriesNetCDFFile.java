@@ -80,6 +80,8 @@ public class StationTimeSeriesNetCDFFile implements Closeable {
         int ncTypeId_record_type = this.record.writeRecordCompound(ncId);
         Map<String, Variable> stVars = this.record.writeStationVariables(ncId, ncDimId_station, ncDimId_station_id_len);
         this.record.writeObservationVariables(ncId, ncDimId_observation, ncTypeId_record_type, doChunking);
+        
+        // Global Attributes
         this.record.writeGlobalAttributes(ncId, globalAttrs); // expose to allow additional global attributes
         
         ncStatus = nc_enddef(ncId); status(ncStatus);
