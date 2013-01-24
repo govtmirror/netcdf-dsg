@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public class StationTimeSeriesNetCDFFile implements Closeable {
     
+    public static final String CF_VER = "CF-1.6";
+    
     private static final int STRING_LENGTH = 32;
 
     private static final short _FillValue_SHORT = -9999;
@@ -82,7 +84,7 @@ public class StationTimeSeriesNetCDFFile implements Closeable {
         this.record.writeObservationVariables(ncId, ncDimId_observation, ncTypeId_record_type, doChunking);
         
         // Global Attributes
-        this.record.writeGlobalAttributes(ncId, globalAttrs); // expose to allow additional global attributes
+        writeGlobalAttributes(globalAttrs);
         
         ncStatus = nc_enddef(ncId); status(ncStatus);
         
@@ -157,6 +159,17 @@ public class StationTimeSeriesNetCDFFile implements Closeable {
 
     public void sync() {
         status(nc_sync(ncId));
+    }
+    
+    private void writeGlobalAttributes(Map<String, String> attrMap) {
+        int ncStatus;
+        ncStatus = nc_put_att_text(ncId, NC_GLOBAL, "Conventions", CF_VER); status(ncStatus);
+        ncStatus = nc_put_att_text(ncId, NC_GLOBAL, "CF:featureType", "timeSeries"); status(ncStatus);
+        if (null != attrMap) {
+            for(String key : attrMap.keySet()) {
+                ncStatus = nc_put_att_text(ncId, NC_GLOBAL, key, attrMap.get(key)); status(ncStatus);
+            }
+        }
     }
 }
 

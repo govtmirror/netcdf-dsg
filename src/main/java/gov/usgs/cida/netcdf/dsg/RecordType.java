@@ -12,8 +12,6 @@ import java.util.*;
  * @author Jordan Walker <jiwalker@usgs.gov>
  */
 public class RecordType {
-    
-    public static final String CF_VER = "CF-1.6";
 
     // Complicated structure, attribute name -> 2 lists (variables{string}, values{Object})
     private LinkedHashMap<String, List[]> attributeMap = new LinkedHashMap<String, List[]>();
@@ -220,17 +218,6 @@ public class RecordType {
         if (doChunking) {
             ncStatus = nc_def_var_chunking(ncId, record_var_id, NC_CHUNKED, new NativeLong[] { new NativeLong(compound_size) });
             status(ncStatus);
-        }
-    }
-    
-    public void writeGlobalAttributes(int ncId, Map<String, String> attrMap) {
-        int ncStatus;
-        ncStatus = nc_put_att_text(ncId, NC_GLOBAL, "Conventions", CF_VER); status(ncStatus);
-        ncStatus = nc_put_att_text(ncId, NC_GLOBAL, "CF:featureType", "timeSeries"); status(ncStatus);
-        if (null != attrMap) {
-            for(String key : attrMap.keySet()) {
-                ncStatus = nc_put_att_text(ncId, NC_GLOBAL, key, attrMap.get(key)); status(ncStatus);
-            }
         }
     }
     
