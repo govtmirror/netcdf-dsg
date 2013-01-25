@@ -2,12 +2,17 @@ package gov.usgs.cida.netcdf.dsg;
 
 import gov.usgs.cida.netcdf.jna.NCUtil.XType;
 import java.io.File;
+import java.io.IOException;
+import java.util.Formatter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.After;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import ucar.nc2.constants.FeatureType;
+import ucar.nc2.ft.FeatureDataset;
+import ucar.nc2.ft.FeatureDatasetFactoryManager;
 
 /**
  *
@@ -31,7 +36,7 @@ public class StationTimeSeriesNetCDFFileTest {
      * Test of putObservation method, of class StationTimeSeriesNetCDFFile.
      */
     @Test
-    public void testNoObservations() {
+    public void testSimple_RaggedIndex_StationOuter() throws IOException {
         
         File file = testfile;
         //List<Station> stationList = new LinkedList<Station>();
@@ -47,15 +52,22 @@ public class StationTimeSeriesNetCDFFileTest {
         StationTimeSeriesNetCDFFile instance = new StationTimeSeriesNetCDFFile(
                 file, rt, true, station1, station2);
         
+        instance.putObservation(new Observation(0, 0, 1f));
+        instance.putObservation(new Observation(1, 0, 2f));
+        
+        instance.putObservation(new Observation(0, 1, 3f));
+        instance.putObservation(new Observation(1, 1, 4f));
+        
         instance.close();
         assertTrue(file.exists());
+        validateNetCDFFileAsDSG(file);
     }
     
     /**
      * Test of putObservation method, of class StationTimeSeriesNetCDFFile.
      */
     @Test
-    public void testNoObservationsAgain() {
+    public void testSimple_RaggedIndex_TimeOuter() throws IOException {
         
         File file = testfile;
         //List<Station> stationList = new LinkedList<Station>();
@@ -78,12 +90,19 @@ public class StationTimeSeriesNetCDFFileTest {
         StationTimeSeriesNetCDFFile instance = new StationTimeSeriesNetCDFFile(
                 file, rt, true, station1, station2);
         
+        instance.putObservation(new Observation(0, 0, 1f));
+        instance.putObservation(new Observation(0, 1, 2f));
+        
+        instance.putObservation(new Observation(1, 0, 3f));
+        instance.putObservation(new Observation(1, 1, 4f));
+        
         instance.close();
         assertTrue(file.exists());
+        validateNetCDFFileAsDSG(file);
     }
     
     @Test
-    public void testTomsCDL() {
+    public void testTomsCDL() throws IOException {
         File file = testfile;
         //List<Station> stationList = new LinkedList<Station>();
         Station station1 = new Station(41f, -109f, "demoHUCs.1");
@@ -110,5 +129,21 @@ public class StationTimeSeriesNetCDFFileTest {
         
         instance.close();
         assertTrue(file.exists());
+        validateNetCDFFileAsDSG(file);
+    }
+    
+    private void validateNetCDFFileAsDSG(File file) throws IOException {
+        String path = file.getAbsolutePath();
+        FeatureDataset fds = null;
+        try {
+            fds = FeatureDatasetFactoryManager.open(FeatureType.ANY, path, null, new Formatter(System.err));
+            assertNotNull("Unable to open " + path, fds);
+            assertEquals("NetCDF file not recognized as CF 1.6 DSG", fds.getFeatureType(), FeatureType.STATION);
+            fds.getNetcdfFile().writeCDL(System.out, true);
+        } finally {
+            if (fds != null) {
+                try { fds.close(); } catch (IOException ignore) { }
+            }
+        }
     }
 }
