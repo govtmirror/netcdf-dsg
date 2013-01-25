@@ -4,7 +4,7 @@
     <groupId>gov.usgs.cida.netcdf</groupId>
     <artifactId>netcdf-dsg</artifactId>
     <version>1.4-SNAPSHOT</version>
-    <name>netcdf-dsg</name>
+    <name>NetCDF DSG Writer</name>
     
     <scm>
         <developerConnection>scm:svn:https://cida-svn.er.usgs.gov/repos/dev/usgs/netcdf/netcdf-timeseries/trunk</developerConnection>
