@@ -31,6 +31,21 @@ public class StationTimeSeriesNetCDFFileTest {
     public void tearDown() throws Exception {
         testfile.delete();
     }
+    
+    private void validateNetCDFFileAsDSG(File file) throws IOException {
+        String path = file.getAbsolutePath();
+        FeatureDataset fds = null;
+        try {
+            fds = FeatureDatasetFactoryManager.open(FeatureType.ANY, path, null, new Formatter(System.err));
+            assertNotNull("Unable to open " + path, fds);
+            assertEquals("NetCDF file not recognized as CF 1.6 DSG", fds.getFeatureType(), FeatureType.STATION);
+            fds.getNetcdfFile().writeCDL(System.out, true);
+        } finally {
+            if (fds != null) {
+                try { fds.close(); } catch (IOException ignore) { }
+            }
+        }
+    }
 
     /**
      * Test of putObservation method, of class StationTimeSeriesNetCDFFile.
@@ -132,18 +147,5 @@ public class StationTimeSeriesNetCDFFileTest {
         validateNetCDFFileAsDSG(file);
     }
     
-    private void validateNetCDFFileAsDSG(File file) throws IOException {
-        String path = file.getAbsolutePath();
-        FeatureDataset fds = null;
-        try {
-            fds = FeatureDatasetFactoryManager.open(FeatureType.ANY, path, null, new Formatter(System.err));
-            assertNotNull("Unable to open " + path, fds);
-            assertEquals("NetCDF file not recognized as CF 1.6 DSG", fds.getFeatureType(), FeatureType.STATION);
-            fds.getNetcdfFile().writeCDL(System.out, true);
-        } finally {
-            if (fds != null) {
-                try { fds.close(); } catch (IOException ignore) { }
-            }
-        }
-    }
+
 }
