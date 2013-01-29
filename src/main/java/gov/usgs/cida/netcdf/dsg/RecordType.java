@@ -18,15 +18,22 @@ public class RecordType {
     private int compound_size;
     private int record_var_id;
 
-    public RecordType(String timeUnits) {
+    private final String timeUnit;
+    
+    public RecordType(String timeUnit) {
+        this.timeUnit = timeUnit;
         typeList = new LinkedList<Variable>();
         compound_size = 0;
 
         // These have to be the first two in the record type, everything else is statistics
         addType(Variable.createStationIdVariable());
-        addType(Variable.createTimeVariable(timeUnits));
+        addType(Variable.createTimeVariable(timeUnit));
         addType(Variable.createLatitude());
         addType(Variable.createLongitude());
+    }
+    
+    public String getTimeUnit() {
+        return timeUnit;
     }
 
     public final boolean addType(Variable var) {
@@ -236,6 +243,16 @@ public class RecordType {
             }
         }
         return varNames;
+    }
+    
+    public List<Variable> getDataVars() {
+        List<Variable> dataVariables = new LinkedList<Variable>();
+        for (Variable variable : typeList) {
+            if (variable.vtype == Variable.VariableType.STATISTIC) {
+                dataVariables.add(variable);
+            }
+        }
+        return dataVariables;
     }
     
     public boolean isObservationValid(Observation observation) {
